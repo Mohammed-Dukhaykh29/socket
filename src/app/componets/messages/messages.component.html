@@ -1,0 +1,23 @@
+<form [formGroup]="addMessagesForm" (ngSubmit)="addMessage()">
+    <div class="container-message-form">
+        <div class="container-message-field">
+            <label>Message</label>
+            <input formControlName="desc" type="text">
+        </div>
+        <div class="container-message-field">
+            <label>Users</label>
+            <p-dropdown formControlName="userReceive" [options]="usersData" optionValue="_id" optionLabel="firstName">
+            </p-dropdown>
+        </div>
+        <div>
+            <button>Add</button>
+        </div>
+    </div>
+</form>
+<div class="container-user-messages">
+    <h1>All Messages</h1>
+    <i class="pi pi-bell p-mr-4 p-text-secondary" pBadge style="font-size: 2rem" value="{{messages.length}}"></i>
+    <div *ngFor="let msg of messages">
+        <h4>{{msg.desc}}</h4>
+    </div>
+</div>

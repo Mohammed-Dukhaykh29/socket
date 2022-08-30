@@ -1,0 +1,13 @@
+.container-login-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.login-field-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
