@@ -16,7 +16,7 @@
 </form>
 <div class="container-user-messages">
     <h1>All Messages</h1>
-    <i class="pi pi-bell p-mr-4 p-text-secondary" pBadge style="font-size: 2rem" value="{{messages.length}}"></i>
+    <i class="pi pi-bell p-mr-4 p-text-secondary" pBadge style="font-size: 2rem" value="{{messages?.length}}"></i>
     <div *ngFor="let msg of messages">
         <h4>{{msg.desc}}</h4>
     </div>

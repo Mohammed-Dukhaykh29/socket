@@ -25,6 +25,14 @@ export class MessagesComponent implements OnInit {
     this.getAllMessages()
     this.getUserMessages()
     this.getAllUsers()
+    // this.socket.on("recieve-data", (data: any) => {
+    //   this.messages = data.filter((data: any) => data.userReceive == this.userInfo._id)
+    //   console.log(this.messages);
+    // })
+    this.socket.on("send-message", (data: any) => {
+      this.messages = data.filter((data: any) => data.userReceive == this.userInfo._id)
+      console.log(this.messages);
+    })
   }
 
   Init_AddMessageForm() {
@@ -38,11 +46,13 @@ export class MessagesComponent implements OnInit {
   getAllMessages() {
     this.http.get("api/messages").subscribe({
       next: (res: any) => {
-        this.socket.emit('send-message', res);
-        this.socket.on("recieve-data", (data: any) => {
-          this.messages = data.filter((data: any) => data.userReceive == this.userInfo._id)
-          console.log(this.messages);
-        })
+       
+        console.log(this.messages);
+        // this.socket.emit('send-message', res);
+        // this.socket.on("recieve-data", (data: any) => {
+        //   this.messages = data.filter((data: any) => data.userReceive == this.userInfo._id)
+        //   console.log(this.messages);
+        // })
       }
     })
   }
@@ -71,7 +81,7 @@ export class MessagesComponent implements OnInit {
     }
     this.http.post("/api/messages", body).subscribe({
       next: (res: any) => {
-        this.getAllMessages()
+        // this.getAllMessages()
       }
     })
   }
