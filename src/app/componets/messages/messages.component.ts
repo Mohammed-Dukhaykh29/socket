@@ -15,28 +15,33 @@ export class MessagesComponent implements OnInit {
   addMessagesForm: FormGroup
   socket: any
   userInfo = JSON.parse(localStorage.getItem("SocketStrorage") || "null")
-  constructor(private http: HttpClient, private fb: FormBuilder) {
 
-    this.socket = io('http://localhost:3000');
-
+  currentMessage: any = {
+    title: "",
+    description: "",
+    messageTime: ""
   }
+
+  constructor(private http: HttpClient, private fb: FormBuilder) {
+    this.socket = io('http://localhost:3000');
+  }
+
   ngOnInit(): void {
+    console.log(this.currentMessage);
+
     this.Init_AddMessageForm()
     this.getAllMessages()
     this.getUserMessages()
     this.getAllUsers()
-    // this.socket.on("recieve-data", (data: any) => {
-    //   this.messages = data.filter((data: any) => data.userReceive == this.userInfo._id)
-    //   console.log(this.messages);
-    // })
     this.socket.on("send-message", (data: any) => {
-      this.messages = data.filter((data: any) => data.userReceive == this.userInfo._id)
-      console.log(this.messages);
+      this.messages = data.filter((d: any) => d.to.find((user: any) => user._id == this.userInfo._id))
+      console.log(this.currentMessage);
     })
   }
 
   Init_AddMessageForm() {
     this.addMessagesForm = this.fb.group({
+      title: ["", Validators.required],
       desc: ["", Validators.required],
       userReceive: ["", Validators.required]
     })
@@ -46,13 +51,7 @@ export class MessagesComponent implements OnInit {
   getAllMessages() {
     this.http.get("api/messages").subscribe({
       next: (res: any) => {
-       
-        console.log(this.messages);
-        // this.socket.emit('send-message', res);
-        // this.socket.on("recieve-data", (data: any) => {
-        //   this.messages = data.filter((data: any) => data.userReceive == this.userInfo._id)
-        //   console.log(this.messages);
-        // })
+
       }
     })
   }
@@ -76,14 +75,29 @@ export class MessagesComponent implements OnInit {
 
   addMessage() {
     const body = {
-      desc: this.addMessagesForm.value.desc,
-      userReceive: this.addMessagesForm.value.userReceive
+      title: this.addMessagesForm.value.title,
+      description: this.addMessagesForm.value.desc,
+      from: this.userInfo._id,
+      to: this.addMessagesForm.value.userReceive,
     }
+
     this.http.post("/api/messages", body).subscribe({
       next: (res: any) => {
-        // this.getAllMessages()
+
       }
     })
   }
 
+  getMessage(messageId: string) {
+    const body = {
+      userRecive: this.userInfo._id
+    }
+
+    this.http.post(`api/messages/${messageId}`, body).subscribe({
+      next: (res: any) => {
+        this.currentMessage = res
+        console.log(this.currentMessage);
+      }
+    })
+  }
 }

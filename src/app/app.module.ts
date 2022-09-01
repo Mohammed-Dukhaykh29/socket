@@ -11,13 +11,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { DropdownModule } from 'primeng/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {BadgeModule} from 'primeng/badge';
+import { BadgeModule } from 'primeng/badge';
+import { NavbarComponent } from './componets/navbar/navbar.component';
+import { CheckboxModule } from 'primeng/checkbox';
+
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LoginComponent,
-    MessagesComponent
+    MessagesComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -28,8 +33,9 @@ import {BadgeModule} from 'primeng/badge';
     // DropdownModule,
     FontAwesomeModule,
     DropdownModule,
-    BrowserAnimationsModule ,
-    BadgeModule
+    BrowserAnimationsModule,
+    BadgeModule,
+    CheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

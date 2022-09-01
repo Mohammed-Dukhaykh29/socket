@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     }
     this.http.post("/api/login", body).subscribe({
       next: (res: any) => {
-        this.routers.navigate(["/home"])
+        this.routers.navigate(["/messages"])
         localStorage.setItem("SocketStrorage", JSON.stringify(res))
       }
     })
